@@ -1,0 +1,173 @@
+---
+title: "R markdown: code for stormwaterdata"
+author: "Amber Charman"
+output: github_document
+date: "2026-02-20"
+---
+## Upload tidy verse
+```{r}
+library(tidyverse)
+```
+
+## Viewing my data
+I would like to see how R reads the raw data. 
+
+```{r viewing, eval=FALSE}
+#load data
+stormwaterdata<-read.csv("DATA/stormwater.csv")
+
+#view the data
+stormwaterdata
+
+#see the first few lines
+head(stormwaterdata)
+
+#see the summary
+summary(stormwaterdata)
+```
+
+## Cleaning my data
+ R is reading my data as only one column (when in fact there are 6), and reading the numbers as characters because the data is untidy. In order to analyse the data correctly, I need to tidy the data.
+
+```{r cleaning}
+
+# stringsAsFactors= FALSE allows me to manipulate the "characters", so I can change them to numbers later
+
+#load data
+raw_data <- read.csv("DATA/stormwater.csv", stringsAsFactors = FALSE)
+```
+
+```{r}
+#Separate into multiple columns
+stormwaterdata <- raw_data %>%
+  separate(col = 1,  # Separate the first column
+           into = c("id", "species", "plant.form", "outflow", "inflow", "no3"), #use these headings
+           sep = ",", 
+           convert = TRUE) %>%
+  mutate(
+    species = str_remove_all(species, "\""),  # Remove quotes from species
+    plant.form = str_remove_all(plant.form, "\"")  # Remove quotes plant.form
+  )
+```
+
+```{r, eval=FALSE}
+
+#view the tidy data
+stormwaterdata
+
+# Check R is reading the data correctly: 
+#see the first 5 lines 
+head(stormwaterdata)
+
+```
+
+
+
+```{r}
+# see the summary of the data
+summary(stormwaterdata)
+
+#R is providing the 5 number summary, meaning that it is treating the numbers as numbers and no longer as characters
+```
+
+## ANALYSIS: Summary Statistics by Species 
+```{r statistics}
+# Calculate mean, standard deviation, and sample size for NO3 removal by each species
+# Arranged from highest to lowest removal ability to identify best performers
+
+library(tidyverse)
+stormwaterdata %>%
+  group_by(species) %>%
+  summarise(
+    mean_no3 = mean(no3),
+    sd_no3 = sd(no3),
+    mean_outflow = mean(outflow),
+    n = n()
+  ) %>%
+  arrange(desc(mean_no3))
+```
+
+## Comparing Dryland vs Wetland Plant Performance
+```{r plant.form}
+
+# Compare average NO3 removal between the two plant form types
+# This shows whether plant habitat type (Dryland/Wetland) affects removal ability
+
+stormwaterdata %>%
+  filter(plant.form != "") %>%  # Remove Control rows
+  group_by(plant.form) %>%
+  summarise(
+    mean_no3 = mean(no3),
+    sd_no3 = sd(no3),
+    mean_outflow = mean(outflow),
+    n = n()
+  )
+
+```
+
+## Planted vs Control: Testing Plant Effectiveness
+```{r}
+# Compare average NO3 removal between planted systems and unplanted control (soil only)
+# This determines if plants significantly improve nitrate removal compared to no treatment
+
+# Control data (soil only, no plants)
+control_data <- stormwaterdata %>%
+  filter(species == "Control") %>%
+  summarise(
+    mean_no3 = mean(no3),
+    sd_no3 = sd(no3),
+    mean_outflow = mean(outflow)
+  )
+
+# Planted data (all plant species combined)
+planted_data <- stormwaterdata %>%
+  filter(species != "Control") %>%
+  summarise(
+    mean_no3 = mean(no3),
+    sd_no3 = sd(no3),
+    mean_outflow = mean(outflow)
+  )
+```
+
+```{r}
+# View control data
+control_data
+
+#view plant data
+planted_data
+```
+
+
+## Visualizing Results 
+```{r}
+# Plot 1: NO3 removal ability ranked by plant species, colored by plant form
+
+stormwaterdata %>%
+  filter(plant.form != "") %>%
+  ggplot(aes(x = species, y = no3, fill = plant.form)) +
+  geom_boxplot() +
+  scale_fill_manual(values = c("Dryland" = "blue", "Wetland" = "green")) +
+  theme_minimal() +
+  coord_flip() +
+  labs(title = "Nitrate Removal Ability by Indigenous Plant Species",
+       x = "Plant Species",
+       y = "Nitrate Removed (%)",
+       fill = "Plant Form")
+
+## Plot 2: Average NO3 removal comparison between Dryland and Wetland plants
+
+stormwaterdata %>%
+  filter(plant.form != "") %>%
+  group_by(plant.form) %>%
+  summarise(mean_no3 = mean(no3)) %>%
+  ggplot(aes(x = plant.form, y = mean_no3, fill = plant.form)) +
+  geom_col() +
+  scale_fill_manual(values = c("Dryland" = "steelblue", "Wetland" = "seagreen")) +
+  theme_minimal() +
+  labs(title = "Average Nitrate Removal: Dryland vs Wetland",
+       x = "Plant Form",
+       y = "Nitrate Removed (%)",
+       fill = "Plant Form")
+
+```
+
