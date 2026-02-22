@@ -1,16 +1,19 @@
+
 library(tidyverse)
 stormwaterdata<-read.csv("DATA/stormwater.csv")
 stormwaterdata
 
+#look at the data, assess if it untidy/tidy
 glimpse(stormwaterdata)
 head(stormwaterdata)
 summary(stormwaterdata)
 head(stormwaterdata)
 tail(stormwaterdata)
 
-#this data is reading only one column, and reading the numbers as text. this needs to be changed
+#data is untidy. 
 
 #stringsAsFactors=FALSE allows us to manipulate the text-> numbers later
+
 raw_data <- read.csv("DATA/stormwater.csv", stringsAsFactors = FALSE)
 raw_data
 
