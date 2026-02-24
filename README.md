@@ -1,0 +1,77 @@
+README
+================
+Amber Charman
+2026-02-20
+
+## Nutrient Removal Performance in Cape Town Biofiltration Systems
+
+This project investigates the effectiveness of 9 indigenous plant
+species in Cape Town for removing nutrients from urban storm
+water.Nutrient accumulation can result in eutrophication, the
+nutrient-driven overgrowth of algae that reduces oxygen availability in
+water.
+
+## The purpose of this repository is to:
+
+-import and tidy raw storm water data -calculate summary statistics for
+nutrient removal -compare nitrate (NO3) removal ability among indigenous
+plant species -compare dryland vs wetland plants and if they differ in
+performance of no3 removal -to see that the plants are making a
+difference in ability to remove no3, in comparison to the control (soil)
+-visualize nitrate removal patterns
+
+This project was developed as part of an Honours-level class exercise
+exploring reproducible workflows using R, R Markdown, and GitHub.
+
+## Metadata from the dataset
+
+1)  id-unique replicate number for each experimental container
+2)  species-plant species name tested in the bio filter
+3)  plant.form- functional group classification: dryland, wetland, blank
+    (control)
+4)  inflow- nutrient concentration of nitrate entering the biofilter.
+5)  outflow- nitrate concentration leaving the bio-filter system
+6)  no3- percentage nitrate (no3) removal calculated from inflow and
+    outflow concentrations
+
+## Experimental Design and Data
+
+Setting: A nursery-based study conducted in a glasshouse at the
+University of Cape Town.
+
+Infrastructure: 150 PVC containers filled with Malmesbury shale (sandy
+soil).
+
+Sample Size: Each species/treatment combination had 10 replicates.
+
+Establishment Phase (August 2009 – February 2010): All plant species
+were irrigated with only tap water to allow them to reach a mature stage
+before testing began.
+
+Treatment and Testing Phase (March 2010 – September 2010): This is when
+the different irrigation treatments (Tap Water, S1, and S2) were applied
+to the plants and the soil-only control
+
+## Data source
+
+Data was collected by a team of researchers from the University of Cape
+Town, including S.G. Milandri, K.J. Winter, S.B.M. Chimphango, N.P.
+Armitage, D.N. Mbui, G.E. Jackson, and V. Liebau
+
+The data are derived from: Milandri, S.G., Winter, K.J., Chimphango,
+S.B.M., Armitage, N.P., Mbui, D.N., Jackson, G.E., & Liebau, V. (2012).
+The performance of plant species in removing nutrients from stormwater
+in biofiltration systems in Cape Town. Water SA, 38(5), 655–662.
+
+## Metadata from the dataset
+
+1)  id-unique replicate number for each experimental container
+2)  species-plant species name tested in the bio filter
+3)  plant.form- functional group classification: dryland, wetland, blank
+    (control)
+4)  inflow- nutirent concentration of nitrate entering the biofilter.
+5)  outflow- nitrate concentration leaving the biofilter system
+6)  no3- percentage nitrate (no3) removal calculated from inflow and
+    outflow concentrations
+
+what each folder in the github does??
