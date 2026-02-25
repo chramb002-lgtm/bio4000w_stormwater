@@ -31,6 +31,11 @@ stormwaterdata <- raw_data %>%
   )
 stormwaterdata
 
+#downloading package that allows me to save my clean data
+library(here)
+write_csv(stormwaterdata,here("DATA","cleanstormwaterdata.csv"))
+
+
 # Check it worked
 glimpse(stormwaterdata)
 head(stormwaterdata)
