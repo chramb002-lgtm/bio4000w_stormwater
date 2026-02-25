@@ -2,7 +2,7 @@ README
 ================
 Amber Charman
 2026-02-20
-https://hub.gesis.mybinder.org/user/chramb002-lgtm--000w_stormwater-xjpy9rcu/lab
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/chramb002-lgtm/bio4000w_stormwater/HEAD)
 
 ## Nutrient Removal Performance in Cape Town Biofiltration Systems
 
