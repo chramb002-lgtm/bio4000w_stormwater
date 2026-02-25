@@ -4,8 +4,9 @@ author: "Amber Charman"
 output: github_document
 date: "2026-02-20"
 ---
-## Upload tidy verse
+
 ```{r}
+# Upload tidy verse
 library(tidyverse)
 ```
 
@@ -27,7 +28,7 @@ summary(stormwaterdata)
 ```
 
 ## Cleaning my data
- R is reading my data as only one column (when in fact there are 6), and reading the numbers as characters because the data is untidy. In order to analyse the data correctly, I need to tidy the data.
+ R is reading my data as only one column (when in fact there are 6), and reading the numbers as characters. This is because the data is untidy. In order to analyse the data correctly, I need to tidy the data.
 
 ```{r cleaning}
 
@@ -61,8 +62,6 @@ head(stormwaterdata)
 
 ```
 
-
-
 ```{r}
 # see the summary of the data
 summary(stormwaterdata)
@@ -70,7 +69,7 @@ summary(stormwaterdata)
 #R is providing the 5 number summary, meaning that it is treating the numbers as numbers and no longer as characters
 ```
 
-## ANALYSIS: Summary Statistics by Species 
+## ANALYSIS: Summary statistics by species 
 ```{r statistics}
 # Calculate mean, standard deviation, and sample size for NO3 removal by each species
 # Arranged from highest to lowest removal ability to identify best performers
@@ -87,7 +86,7 @@ stormwaterdata %>%
   arrange(desc(mean_no3))
 ```
 
-## Comparing Dryland vs Wetland Plant Performance
+## Comparing dryland vs wetland plant performance
 ```{r plant.form}
 
 # Compare average NO3 removal between the two plant form types
@@ -105,9 +104,9 @@ stormwaterdata %>%
 
 ```
 
-## Planted vs Control: Testing Plant Effectiveness
+## Plants vs control: testing plant effectiveness
 ```{r}
-# Compare average NO3 removal between planted systems and unplanted control (soil only)
+# Compare average NO3 removal between plant systems and the control (soil only)
 # This determines if plants significantly improve nitrate removal compared to no treatment
 
 # Control data (soil only, no plants)
@@ -137,24 +136,23 @@ control_data
 planted_data
 ```
 
-
-## Visualizing Results 
+## Visualizing results 
 ```{r}
-# Plot 1: NO3 removal ability ranked by plant species, colored by plant form
+# Plot 1: NO3 removal ability per plant species, coloured by plant form
 
 stormwaterdata %>%
   filter(plant.form != "") %>%
   ggplot(aes(x = species, y = no3, fill = plant.form)) +
   geom_boxplot() +
-  scale_fill_manual(values = c("Dryland" = "blue", "Wetland" = "green")) +
+  scale_fill_manual(values = c("Dryland" = "pink", "Wetland" = "green")) +
   theme_minimal() +
   coord_flip() +
-  labs(title = "Nitrate Removal Ability by Indigenous Plant Species",
-       x = "Plant Species",
-       y = "Nitrate Removed (%)",
-       fill = "Plant Form")
+  labs(title = "Nitrate removal ability by indigenous plant species",
+       x = "Plant species",
+       y = "Nitrate removed (%)",
+       fill = "Plant form")
 
-## Plot 2: Average NO3 removal comparison between Dryland and Wetland plants
+## Plot 2: Average NO3 removal comparison between dryland and wetland plants
 
 stormwaterdata %>%
   filter(plant.form != "") %>%
@@ -162,12 +160,12 @@ stormwaterdata %>%
   summarise(mean_no3 = mean(no3)) %>%
   ggplot(aes(x = plant.form, y = mean_no3, fill = plant.form)) +
   geom_col() +
-  scale_fill_manual(values = c("Dryland" = "steelblue", "Wetland" = "seagreen")) +
+  scale_fill_manual(values = c("dryland" = "orange", "wetland" = "blue")) +
   theme_minimal() +
-  labs(title = "Average Nitrate Removal: Dryland vs Wetland",
-       x = "Plant Form",
-       y = "Nitrate Removed (%)",
-       fill = "Plant Form")
+  labs(title = "Average nitrate removal: dryland vs wetland",
+       x = "Plant form",
+       y = "Nitrate removed (%)",
+       fill = "Plant form")
 
 ```
 
